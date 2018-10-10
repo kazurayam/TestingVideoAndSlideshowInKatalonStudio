@@ -64,7 +64,7 @@ for (int i = 0; i < slideCount; i++) {
 		CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyImages'(
 			imageList.get(i), imageList.get(x), 90.0)
 	diffList.add(difference)
-	Path out = tmpDir.resolve("${title}_diff_${i}x${x}.png")
+	Path out = tmpDir.resolve("${title}_diff_${i}x${x}(${difference.getRatioAsString()}).png")
 	ImageIO.write(difference.getDiffImage(), "PNG", out.toFile())
 	
 	// report FAILURE when one or more pairs look not different enough = looks unchanged

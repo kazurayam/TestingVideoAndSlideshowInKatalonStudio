@@ -101,7 +101,7 @@ class ScreenshotDriver {
 		saveEntirePageImage(webDriver, file, timeout)
 	}
 
-	
+
 	/**
 	 * 
 	 * @param BufferedImage expectedImage
@@ -112,8 +112,8 @@ class ScreenshotDriver {
 	@Keyword
 	static ImageDifference verifyImages(BufferedImage expectedImage,
 			BufferedImage actualImage, Double criteriaPercent) {
-		ImageDifference difference = 
-			new ImageDifference(expectedImage, actualImage)
+		ImageDifference difference =
+				new ImageDifference(expectedImage, actualImage)
 		difference.setCriteria(criteriaPercent)
 		return difference
 	}
@@ -280,7 +280,7 @@ class ScreenshotDriver {
 			Double diffRatio = diff.getDiffSize() / area * 100
 			return diffRatio
 		}
-		
+
 
 		/**
 		 * @return true if the expected image and the actual image pair has 
@@ -290,7 +290,7 @@ class ScreenshotDriver {
 		Boolean imagesAreDifferent() {
 			return (ratio_ > criteria_)
 		}
-		
+
 		/**
 		 * @return true if the expected image and the actual image pair has
 		 *         smaller difference than the criteria = these are similar enough,
