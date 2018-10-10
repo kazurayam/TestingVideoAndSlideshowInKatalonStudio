@@ -11,6 +11,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
+import com.kazurayam.ksbackyard.ScreenshotDriver.ImageDifference
 import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.testobject.TestObject
@@ -28,6 +29,7 @@ Files.createDirectories(tmpDir)
 
 // open browser
 WebUI.openBrowser('')
+WebUI.setViewPortSize(1024,768)
 WebDriver driver = DriverFactory.getWebDriver()
 
 WebUI.navigateToUrl(url)
@@ -40,14 +42,35 @@ WebUI.verifyElementPresent(bannerTO, 10, FailureHandling.STOP_ON_FAILURE)
 // grasp the banner as a WebElement
 WebElement banner = driver.findElement(By.xpath(bannerTO.findPropertyValue('xpath')))
 
-// take screenshots of slides in the banner
-for (int i = 1; i <= slideCount; i++) {
+// take screenshots of slides and save it to disk
+List<BufferedImage> imageList = new ArrayList<BufferedImage>()
+for (int i = 0; i < slideCount; i++) {
 	BufferedImage img = CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.takeElementImage'(
 		driver, banner)
-	Path out1 = tmpDir.resolve("${title}_${i}.png")
-	ImageIO.write(img, "PNG", out1.toFile())
+	Path out = tmpDir.resolve("${title}_${i}.png")
+	ImageIO.write(img, "PNG", out.toFile())
+	imageList.add(img)
 	// wait for the slide change
 	WebUI.delay(intervalSeconds)
+}
+
+// check differences of the image pairs:
+//     (img0,img1), (img1,img2), (img2,img3) ... (imgN-1, imgN), (imgN, img0)
+// save the diff-images to disk, 
+List<ImageDifference> diffList = new ArrayList<ImageDifference>()
+for (int i = 0; i < slideCount; i++) {
+	int x = (i < slideCount - 1) ? (i + 1) : 0
+	ImageDifference difference =
+		CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyImages'(
+			imageList.get(i), imageList.get(x), 90.0)
+	diffList.add(difference)
+	Path out = tmpDir.resolve("${title}_diff_${i}x${x}.png")
+	ImageIO.write(difference.getDiffImage(), "PNG", out.toFile())
+	
+	// report FAILURE when one or more pairs look not different enough = looks unchanged
+	CustomKeywords.'com.kazurayam.ksbackyard.Assert.assertTrue'(
+		"diff_${i}x${x} looks unchanged",
+		difference.imagesAreDifferent())
 }
 
 WebUI.closeBrowser()

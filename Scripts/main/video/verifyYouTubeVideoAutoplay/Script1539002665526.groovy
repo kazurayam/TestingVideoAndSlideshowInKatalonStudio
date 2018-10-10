@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 import com.kazurayam.materials.MaterialRepository
+import com.kazurayam.ksbackyard.ScreenshotDriver.ImageDifference
 import com.kms.katalon.core.model.FailureHandling as FailureHandling
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
@@ -42,37 +43,29 @@ WebElement mainVideo = driver.findElement(By.cssSelector("video.html5-main-video
 WebElement playButton = driver.findElement(By.cssSelector("button.ytp-play-button"))
 
 // verify if the YouTube Vido is autoplaying or not
-/* result is a Map object
- *         [ 'evaluated': Boolean,
- *           'diffratio': Number,
- *           'criteria' : Number,
- *           'image1'   : BufferedImage,
- *           'image2'   : BufferedImage,
- *           'imagediff': BufferedImage
- *         ]
- */
-Map<String, Object> result = 
+ImageDifference difference = 
 	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoInMotion'(
 		driver, mainVideo, playButton,
 		waitSeconds, criteriaPercent)
 
 // write the screenshot taken at the start
 Path png1 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "${title}_1st.png")
-ImageIO.write(result.get('image1'), "PNG", png1.toFile())
+ImageIO.write(difference.getExpectedImage(), "PNG", png1.toFile())
 
 // write the screenshot taken after waitSeconds
 Path png2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "${title}_2nd.png")
-ImageIO.write(result.get('image2'), "PNG", png2.toFile())
+ImageIO.write(difference.getActualImage(), "PNG", png2.toFile())
 
 // write the imageDiff between the above 2 screenshots
-String descriptor = "(${String.format('%1$.2f', result.get('diffratio'))})${result.get('evaluated')?'':'FAILED'}"
+String descriptor = "(${difference.getRatioAsString()})${difference.getEvaluated()?'':'FAILED'}"
 Path pngDiff = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "${title}_diff${descriptor}.png")
-ImageIO.write(result.get('imagediff'), "PNG", pngDiff.toFile())
+ImageIO.write(difference.getDiffImage(), "PNG", pngDiff.toFile())
 
 WebUI.closeBrowser()
 
-println "['url':${url}, 'title':'${title}','result':['evaluated':${result.evaluated}, 'diffratio':${result.diffratio}," + 
-	" 'criteria':${result.criteria}]]"
+println "['url':${url}, 'title':'${title}','difference.getEvaluated()':${difference.getEvaluated()}" +
+	", 'difference.getRatio()':${difference.getRatio()}" +
+	", 'difference.getCriteria()':${difference.getCriteria()}]]"
 
 // return boolean if the movie autoplaying or not
-return (Boolean)result.get('evaluated')
+return difference.imagesAreDifferent()

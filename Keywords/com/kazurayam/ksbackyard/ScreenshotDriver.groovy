@@ -101,8 +101,22 @@ class ScreenshotDriver {
 		saveEntirePageImage(webDriver, file, timeout)
 	}
 
-
-
+	
+	/**
+	 * 
+	 * @param BufferedImage expectedImage
+	 * @param BufferedImage actualImage
+	 * @param Double criteriaPercentage, e.g. 90.0%
+	 * @return
+	 */
+	@Keyword
+	static ImageDifference verifyImages(BufferedImage expectedImage,
+			BufferedImage actualImage, Double criteriaPercent) {
+		ImageDifference difference = 
+			new ImageDifference(expectedImage, actualImage)
+		difference.setCriteria(criteriaPercent)
+		return difference
+	}
 
 
 	/**
@@ -119,34 +133,22 @@ class ScreenshotDriver {
 	 * @param video  <video> WebElement
 	 * @param playButton <button> WebElement to start/stop the video
 	 * @param gapTimeSecs 1st screenshot --> gapTimeSecs --> 2nd screenshot  
-	 * @return a Map object
-	 *         [ 'evaluated'    : Boolean,
-	 *           'diffratio'    : Number,
-	 *           'diffratiostr' : String,
-	 *           'criteria'     : Number,
-	 *           'image1'       : BufferedImage,
-	 *           'image2'       : BufferedImage,
-	 *           'imagediff'    : BufferedImage
-	 *         ]
+	 * @return an ImageDifference object
 	 */
 	@Keyword
-	static Map verifyVideoInMotion(
+	static ImageDifference verifyVideoInMotion(
 			WebDriver driver,
 			WebElement video,
 			WebElement playButton,
 			Integer gapTimeSecs,
 			Double criteriaPercent) {
 
-		//
-		Map<String, Object> result = new HashMap<String, Object>()
-		result.put('criteria', criteriaPercent)
 
 		// click the start/stop button
 		WebUI.executeJavaScript("arguments[0].click()", Arrays.asList(playButton))
 
 		// take the 1st screen shot
 		BufferedImage image1 = ScreenshotDriver.takeElementImage(driver, video)
-		result.put('image1', image1)
 
 		// again click the start/stop button and wait
 		if (gapTimeSecs > 0) {
@@ -156,23 +158,14 @@ class ScreenshotDriver {
 
 		// take the 2nd screenshot
 		BufferedImage image2 = ScreenshotDriver.takeElementImage(driver, video)
-		result.put('image2', image2)
 
-		// make KSImageDiff
-		XImageDiff imgDiff = new XImageDiff(image1, image2)
-		result.put('imagediff', imgDiff.getDiffImage())
-		result.put('diffratio', imgDiff.getDiffRatio())
-		result.put('diffratiostr', imgDiff.getDiffRatioAsString())
+		// how differenct these are?
+		ImageDifference difference = new ImageDifference(image1, image2)
 
-		// evaluate result
-		if (imgDiff.getDiffRatio() > criteriaPercent) {
-			result.put('evaluated', true)
-		} else {
-			result.put('evaluated', false)
-		}
+		difference.setCriteria(criteriaPercent)
 
 		// return true if the movie autoplay in motion, otherwise false
-		return result
+		return difference
 	}
 
 
@@ -185,31 +178,18 @@ class ScreenshotDriver {
 	 * 3. 2nd screenshot is taken.
 	 * 4. compare the screenshots. Return true if they have no or just a little difference.
 	 * 
-	 * @return a Map object
-	 *         [ 'evaluated'    : Boolean,
-	 *           'diffratio'    : Number,
-	 *           'diffratiostr' : String,
-	 *           'criteria'     : Number,
-	 *           'image1'       : BufferedImage,
-	 *           'image2'       : BufferedImage,
-	 *           'imagediff'    : BufferedImage
-	 *         ]
+	 * @return an ImageDifference object
 	 */
 	@Keyword
-	static Map verifyVideoStartsStill(
+	static ImageDifference verifyVideoStartsStill(
 			WebDriver driver,
 			WebElement video,
 			WebElement playButton = null /* not used */,
 			Integer gapTimeSecs = 5,
 			Double criteriaPercent = 10.0) {
 
-		//
-		Map<String, Object> result = new HashMap<String, Object>()
-		result.put('criteria', criteriaPercent)
-
 		// take the 1st screen shot
 		BufferedImage image1 = ScreenshotDriver.takeElementImage(driver, video)
-		result.put('image1', image1)
 
 		// wait for some seconds
 		if (gapTimeSecs > 0) {
@@ -218,45 +198,37 @@ class ScreenshotDriver {
 
 		// take the 2nd screenshot
 		BufferedImage image2 = ScreenshotDriver.takeElementImage(driver, video)
-		result.put('image2', image2)
 
 		// make KSImageDiff
-		XImageDiff imgDiff = new XImageDiff(image1, image2)
-		result.put('imagediff', imgDiff.getDiffImage())
-		result.put('diffratio', imgDiff.getDiffRatio())
-		result.put('diffratiostr', imgDiff.getDiffRatioAsString())
+		ImageDifference difference = new ImageDifference(image1, image2)
 
-		// evaluate result
-		if (imgDiff.getDiffRatio() < criteriaPercent) {
-			result.put('evaluated', true)
-		} else {
-			result.put('evaluated', false)
-		}
+		difference.setCriteria(criteriaPercent)
 
 		// return true if the movie start still, otherwise false
-		return result
+		return difference
 	}
 
 
 	/**
 	 * wraps aShot's ImageDiff object, plus a few getter methods
 	 */
-	static private class XImageDiff {
+	static class ImageDifference {
 
 		private BufferedImage expectedImage_
 		private BufferedImage actualImage_
 		private BufferedImage diffImage_
-		private Double diffRatio_ = 0.0
+		private Double ratio_ = 0.0        // percentage
+		private Double criteria_ = 1.0     // percentage
 
-		XImageDiff(BufferedImage expected, BufferedImage actual) {
+		ImageDifference(BufferedImage expected, BufferedImage actual) {
 			expectedImage_ = expected
 			actualImage_ = actual
-			ImageDiff imgDiff = makeDiff(expectedImage_, actualImage_)
-			diffRatio_ = diffRatioPercent(imgDiff)
+			ImageDiff imgDiff = makeImageDiff(expectedImage_, actualImage_)
+			ratio_ = calculateRatioPercent(imgDiff)
 			diffImage_ = imgDiff.getMarkedImage()
 		}
 
-		private ImageDiff makeDiff(BufferedImage expected, BufferedImage actual) {
+		private ImageDiff makeImageDiff(BufferedImage expected, BufferedImage actual) {
 			Screenshot expectedScreenshot = new Screenshot(expected)
 			Screenshot actualScreenshot = new Screenshot(actual)
 			ImageDiff imgDiff = new ImageDiffer().makeDiff(expectedScreenshot, actualScreenshot)
@@ -275,17 +247,30 @@ class ScreenshotDriver {
 			return diffImage_
 		}
 
-
-		Double getDiffRatio() {
-			return diffRatio_
+		void setCriteria(Double criteria) {
+			criteria_ = criteria
 		}
 
-		String getDiffRatioAsString() {
-			return String.format('%1$.2f', this.getDiffRatio())
+		Double getCriteria() {
+			return criteria_
 		}
 
+		/**
+		 * 
+		 * @return e.g. 0.23% or 90.0%
+		 */
+		Double getRatio() {
+			return ratio_
+		}
 
-		private Double diffRatioPercent(ImageDiff diff) {
+		/**
+		 * @return e.g. "0.23" or "90.00"
+		 */
+		String getRatioAsString(String fmt = '%1$.2f') {
+			return String.format(fmt, this.getRatio())
+		}
+
+		private Double calculateRatioPercent(ImageDiff diff) {
 			boolean hasDiff = diff.hasDiff()
 			if (!hasDiff) {
 				return 0.0
@@ -294,6 +279,25 @@ class ScreenshotDriver {
 			int area = diff.getMarkedImage().getWidth() * diff.getMarkedImage().getHeight()
 			Double diffRatio = diff.getDiffSize() / area * 100
 			return diffRatio
+		}
+		
+
+		/**
+		 * @return true if the expected image and the actual image pair has 
+		 *         greater difference than the criteria = these are different enough,
+		 *         otherwise false.
+		 */
+		Boolean imagesAreDifferent() {
+			return (ratio_ > criteria_)
+		}
+		
+		/**
+		 * @return true if the expected image and the actual image pair has
+		 *         smaller difference than the criteria = these are similar enough,
+		 *         otherwise false.
+		 */
+		Boolean imagesAreSimilar() {
+			return (ratio_ <= criteria_)
 		}
 	}
 }
