@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestSuiteEntity>
+   <description></description>
+   <name>LetsKinnikuTogether</name>
+   <tag></tag>
+   <isRerun>false</isRerun>
+   <lastRun>2018-10-09T15:40:30</lastRun>
+   <mailRecipient></mailRecipient>
+   <numberOfRerun>0</numberOfRerun>
+   <pageLoadTimeout>30</pageLoadTimeout>
+   <pageLoadTimeoutDefault>true</pageLoadTimeoutDefault>
+   <rerunFailedTestCasesOnly>false</rerunFailedTestCasesOnly>
+   <testSuiteGuid>54a05978-bf55-4c0a-8284-34226cf4c8d9</testSuiteGuid>
+   <testCaseLink>
+      <guid>1dd8b850-d3e5-4497-a2c8-50d6971bd8aa</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/main/video/verifyNHKVideoStartStill</testCaseId>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>439295a2-86c1-45e7-9df9-9ed31083f4e3</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>aff5784f-0d0e-4b46-9d7f-7d816e0e598b</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>7866f90d-d101-4b6a-82f5-2abf4ca9d50a</variableId>
+      </variableLink>
+      <variableLink>
+         <testDataLinkId></testDataLinkId>
+         <type>DEFAULT</type>
+         <value></value>
+         <variableId>0d526a1d-ad04-49a2-832b-458a23adad69</variableId>
+      </variableLink>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>0d6f69e4-b923-47c6-9c1d-2e56002b5c20</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/main/video/verifyYouTubeVideoAutoplay_LetsKinnikuTogether - failing case</testCaseId>
+   </testCaseLink>
+   <testCaseLink>
+      <guid>45dee5fc-dcc8-4d5e-b5bc-af354ec2afbd</guid>
+      <isReuseDriver>false</isReuseDriver>
+      <isRun>true</isRun>
+      <testCaseId>Test Cases/main/video/verifyYouTubeVideoAutoplay_LetsKinnikuTogether</testCaseId>
+   </testCaseLink>
+</TestSuiteEntity>

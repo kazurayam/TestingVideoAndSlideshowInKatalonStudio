@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>verifyYouTubeVideoAutoplay</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>b9c76eb5-8f10-4a42-bfc5-ffcccc757b5b</testCaseGuid>
+   <variable>
+      <defaultValue>'https://www.youtube.com/watch?v=WndOChZSjTk'</defaultValue>
+      <description></description>
+      <id>7262eead-095f-413c-8491-aa90fca436b2</id>
+      <masked>false</masked>
+      <name>url</name>
+   </variable>
+   <variable>
+      <defaultValue>'Lets_Kinniku_Together'</defaultValue>
+      <description></description>
+      <id>b2d0ee63-7f73-4a5e-a248-6115886cfef1</id>
+      <masked>false</masked>
+      <name>title</name>
+   </variable>
+   <variable>
+      <defaultValue>10</defaultValue>
+      <description></description>
+      <id>48e78d41-c30e-4a66-9a5b-fd682bb926d1</id>
+      <masked>false</masked>
+      <name>waitSeconds</name>
+   </variable>
+   <variable>
+      <defaultValue>90.0</defaultValue>
+      <description></description>
+      <id>f92cab72-32c2-4b33-9fee-2f5c190441cd</id>
+      <masked>false</masked>
+      <name>criteriaPercent</name>
+   </variable>
+</TestCaseEntity>
