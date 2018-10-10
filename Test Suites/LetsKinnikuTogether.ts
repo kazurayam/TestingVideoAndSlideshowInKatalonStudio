@@ -41,16 +41,4 @@
          <variableId>0d526a1d-ad04-49a2-832b-458a23adad69</variableId>
       </variableLink>
    </testCaseLink>
-   <testCaseLink>
-      <guid>0d6f69e4-b923-47c6-9c1d-2e56002b5c20</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
-      <testCaseId>Test Cases/main/video/verifyYouTubeVideoAutoplay_LetsKinnikuTogether - failing case</testCaseId>
-   </testCaseLink>
-   <testCaseLink>
-      <guid>45dee5fc-dcc8-4d5e-b5bc-af354ec2afbd</guid>
-      <isReuseDriver>false</isReuseDriver>
-      <isRun>true</isRun>
-      <testCaseId>Test Cases/main/video/verifyYouTubeVideoAutoplay_LetsKinnikuTogether</testCaseId>
-   </testCaseLink>
 </TestSuiteEntity>

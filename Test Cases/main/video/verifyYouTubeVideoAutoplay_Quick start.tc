@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>verifyYouTubeVideoAutoplay_LetsKinnikuTogether</name>
+   <name>verifyYouTubeVideoAutoplay_Quick start</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>4c37be5e-d3f8-48e2-a50f-fb05b7f8fa2f</testCaseGuid>
+   <testCaseGuid>b395588f-aab8-4442-99c3-ad9479936373</testCaseGuid>
 </TestCaseEntity>

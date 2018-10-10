@@ -3,21 +3,22 @@ import static com.kms.katalon.core.testcase.TestCaseFactory.findTestCase
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-def url = "https://www.youtube.com/watch?v=WndOChZSjTk"
-def title = "Lets_Kinniku_Together"
+def url = "https://www.youtube.com/watch?v=Q80JTXYIteU&feature=youtu.be"
+def title = "Katalon Studio - Quick start"
+def waitSeconds = 0
 
 Boolean isInMotion = WebUI.callTestCase(
 	findTestCase('Test Cases/main/video/verifyYouTubeVideoAutoplay'),
 	[
 		'url': url,
 		'title': title,
-		'waitSeconds': 11
+		'waitSeconds': waitSeconds
 	],
 	FailureHandling.OPTIONAL)
 
 println "isInMotion=${isInMotion}"
 
-// pass when the Video is in motion, otherwise fail
+// pass when the Video start still, otherwise fail   ------- this would fail
 CustomKeywords.'com.kazurayam.ksbackyard.Assert.assertTrue'(
 	"movie ${title} at ${url} is not autoplaying",
 	isInMotion,

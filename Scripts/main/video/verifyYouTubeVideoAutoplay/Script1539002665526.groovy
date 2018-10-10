@@ -57,13 +57,13 @@ Path png2 = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "${title}
 ImageIO.write(difference.getActualImage(), "PNG", png2.toFile())
 
 // write the imageDiff between the above 2 screenshots
-String descriptor = "(${difference.getRatioAsString()})${difference.getEvaluated()?'':'FAILED'}"
+String descriptor = "(${difference.getRatioAsString()})${difference.imagesAreDifferent()?'':'FAILED'}"
 Path pngDiff = mr.resolveMaterialPath(GlobalVariable.CURRENT_TESTCASE_ID, "${title}_diff${descriptor}.png")
 ImageIO.write(difference.getDiffImage(), "PNG", pngDiff.toFile())
 
 WebUI.closeBrowser()
 
-println "['url':${url}, 'title':'${title}','difference.getEvaluated()':${difference.getEvaluated()}" +
+println "['url':${url}, 'title':'${title}','difference.getEvaluated()':${difference.imagesAreDifferent()}" +
 	", 'difference.getRatio()':${difference.getRatio()}" +
 	", 'difference.getCriteria()':${difference.getCriteria()}]]"
 

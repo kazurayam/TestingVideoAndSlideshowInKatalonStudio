@@ -26,6 +26,11 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies
 
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
+/**
+ * 
+ * @author kazurayam
+ *
+ */
 class ScreenshotDriver {
 
 	static MaterialRepository mr_ = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
@@ -36,7 +41,8 @@ class ScreenshotDriver {
 
 
 	/**
-	 *
+	 * @deprecated do no use this method. use CollectiveXImageDiffer instead.
+	 * 
 	 * @param profileExpected e.g., 'product'
 	 * @param profileAcutual  e.g., 'develop'
 	 * @param tSuiteName      e.g., 'TS1'
@@ -53,6 +59,14 @@ class ScreenshotDriver {
 
 
 
+	/**
+	 * takes screenshot of the specified WebElement in the target WebPage,
+	 * returns it as a BufferedImage object
+	 * 
+	 * @param webDriver
+	 * @param webElement
+	 * @return BufferedImage
+	 */
 	@Keyword
 	static BufferedImage takeElementImage(WebDriver webDriver, WebElement webElement) {
 		Screenshot screenshot = new AShot().
@@ -61,6 +75,14 @@ class ScreenshotDriver {
 		return screenshot.getImage()
 	}
 
+	/**
+	 * take the screenshot of the specified WebElement in the target Web page, 
+	 * and save it into the output file in PNG format.
+	 * 
+	 * @param webDriver
+	 * @param webElement
+	 * @param output
+	 */
 	@Keyword
 	static void saveElementImage(WebDriver webDriver, WebElement webElement, Path output) {
 		if (!Files.exists(output.getParent())) {
@@ -72,7 +94,14 @@ class ScreenshotDriver {
 
 
 
-
+	/**
+	 * takes screenshot of the entire page targeted,
+	 * returns it as a BufferedImage object
+	 *
+	 * @param webDriver
+	 * @param webElement
+	 * @return BufferedImage
+	 */
 	@Keyword
 	static BufferedImage takeEntirePageImage(WebDriver webDriver, Integer timeout = 300) {
 		Screenshot screenshot = new AShot().
@@ -81,6 +110,14 @@ class ScreenshotDriver {
 		return screenshot.getImage()
 	}
 
+	/**
+	 * take the screenshot of the entire page targeted,
+	 * and save it into the output file in PNG format.
+	 *
+	 * @param webDriver
+	 * @param webElement
+	 * @param output
+	 */
 	@Keyword
 	static void saveEntirePageImage(WebDriver webDriver, File file, Integer timeout = 300) {
 		BufferedImage image = takeEntirePageImage(webDriver, timeout)

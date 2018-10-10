@@ -41,13 +41,13 @@ WebElement mainVideo = driver.findElement(By.cssSelector("video.html5-main-video
 // <button> element to stop/play video in the YouTube page
 WebElement playButton = driver.findElement(By.cssSelector("button.ytp-play-button"))
 
-// verify if the YouTube Vido is autoplaying or not
+// verify if the YouTube Video is autoplaying or not
 ImageDifference difference =
 	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoInMotion'(
 		driver, mainVideo, playButton,
 		waitSeconds, criteriaPercent)
 		
-// create tmp dir where we stort the PNG files
+// create tmp dir where we store the PNG files
 Path tmpDir = Paths.get(RunConfiguration.getProjectDir()).resolve('tmp/video')
 Files.createDirectories(tmpDir)
 
@@ -59,21 +59,25 @@ ImageIO.write(difference.getExpectedImage(), "PNG", png1.toFile())
 Path png2 = tmpDir.resolve("${title}_2nd.png")
 ImageIO.write(difference.getActualImage(), "PNG", png2.toFile())
 
-// write the imageDiff between the above 2 screenshots
-String descriptor = "(${difference.getRatioAsString()})${difference.imagesAreDifferent()?'':'FAILED'}"
+// write the image of difference between the above 2 screenshots
+String descriptor = 
+    "(${difference.getRatioAsString()})" + 
+    "${difference.imagesAreDifferent()?'':'FAILED'}"
 Path pngDiff = tmpDir.resolve("${title}_diff${descriptor}.png")
 ImageIO.write(difference.getDiffImage(), "PNG", pngDiff.toFile())
 
 WebUI.closeBrowser()
 
-println "['url':${url}, 'title':'${title}','difference.getEvaluated()':${difference.imagesAreDifferent()}" + 
+println "['url':${url}, 'title':'${title}', " + 
+    "'difference.getEvaluated()':${difference.imagesAreDifferent()}" + 
 	", 'difference.getRatio()':${difference.getRatio()}" +
 	", 'difference.getCriteria()':${difference.getCriteria()}]]"
 
-// if the movie autoplaying or not
+// now we know if the movie autoplaying or not
 Boolean isInMotion = difference.imagesAreDifferent()
 
-// pass when the Video is in motion, otherwise fail, output to the log
+// record the result of evaluation: pass when the Video is in motion, otherwise fail.
+// Output message into the log
 CustomKeywords.'com.kazurayam.ksbackyard.Assert.assertTrue'(
 	"movie ${title} at ${url} is not autoplaying",
 	isInMotion,
