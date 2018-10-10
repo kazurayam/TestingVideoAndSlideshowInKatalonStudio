@@ -19,6 +19,8 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 String url = 'https://www.mandel.org.uk/'
 String title = 'Mandelbrot Explorer'
+int intervalSeconds = 6
+int slideCount = 4
 
 // ensure output directory
 Path tmpDir = Paths.get(RunConfiguration.getProjectDir()).resolve('tmp/slideshow')
@@ -28,10 +30,7 @@ Files.createDirectories(tmpDir)
 WebUI.openBrowser('')
 WebDriver driver = DriverFactory.getWebDriver()
 
-
-WebUI.navigateToUrl('https://www.mandel.org.uk/')
-
-WebUI.waitForPageLoad(5)
+WebUI.navigateToUrl(url)
 
 TestObject bannerTO = findTestObject('Page - Mandelbrot Explorer Home/div_banner')
 
@@ -41,11 +40,14 @@ WebUI.verifyElementPresent(bannerTO, 10, FailureHandling.STOP_ON_FAILURE)
 // grasp the banner as a WebElement
 WebElement banner = driver.findElement(By.xpath(bannerTO.findPropertyValue('xpath')))
 
-// take the starter screenshot of the banner
-BufferedImage img1 = CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.takeElementImage'(
-	driver, banner)
-Path out1 = tmpDir.resolve("${title}_1.png")
-ImageIO.write(img1, "PNG", out1.toFile())
-
+// take screenshots of slides in the banner
+for (int i = 1; i <= slideCount; i++) {
+	BufferedImage img = CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.takeElementImage'(
+		driver, banner)
+	Path out1 = tmpDir.resolve("${title}_${i}.png")
+	ImageIO.write(img, "PNG", out1.toFile())
+	// wait for the slide change
+	WebUI.delay(intervalSeconds)
+}
 
 WebUI.closeBrowser()
