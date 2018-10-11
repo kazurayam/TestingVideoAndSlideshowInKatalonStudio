@@ -26,7 +26,9 @@ def title = "Katalon Studio - Quick start"
 def waitSeconds = 11
 def criteriaPercent = 90.0
 
-WebUI.openBrowser('')
+//WebUI.openBrowser('')
+CustomKeywords.'com.kazurayam.KazurayamSpecifics.openBrowser'()
+
 WebUI.setViewPortSize(1024, 768)
 WebDriver driver = DriverFactory.getWebDriver()
 

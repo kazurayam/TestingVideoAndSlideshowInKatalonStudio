@@ -4,7 +4,7 @@
    <name>Katalon Studio Quick start</name>
    <tag></tag>
    <isRerun>false</isRerun>
-   <lastRun>2018-10-11T12:53:01</lastRun>
+   <lastRun>2018-10-11T14:57:32</lastRun>
    <mailRecipient></mailRecipient>
    <numberOfRerun>0</numberOfRerun>
    <pageLoadTimeout>30</pageLoadTimeout>

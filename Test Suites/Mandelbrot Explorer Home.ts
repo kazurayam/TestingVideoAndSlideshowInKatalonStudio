@@ -4,7 +4,7 @@
    <name>Mandelbrot Explorer Home</name>
    <tag></tag>
    <isRerun>false</isRerun>
-   <lastRun>2018-10-11T13:31:11</lastRun>
+   <lastRun>2018-10-11T14:12:55</lastRun>
    <mailRecipient></mailRecipient>
    <numberOfRerun>0</numberOfRerun>
    <pageLoadTimeout>30</pageLoadTimeout>

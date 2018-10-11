@@ -32,7 +32,9 @@ Path tmpDir = Paths.get(RunConfiguration.getProjectDir()).resolve('tmp/slideshow
 Files.createDirectories(tmpDir)
 
 // open browser
-WebUI.openBrowser('')
+//WebUI.openBrowser('')
+CustomKeywords.'com.kazurayam.KazurayamSpecifics.openBrowser'()
+
 WebUI.setViewPortSize(1024,768)
 WebDriver driver = DriverFactory.getWebDriver()
 
