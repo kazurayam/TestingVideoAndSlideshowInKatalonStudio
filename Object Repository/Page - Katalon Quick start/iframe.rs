@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WebElementEntity>
    <description></description>
-   <name>button_big-play-button0</name>
+   <name>iframe</name>
    <tag></tag>
-   <elementGuidId>4b2e79f3-a0ce-494f-bbd3-60cc58730f54</elementGuidId>
+   <elementGuidId>b9bf7bbb-8db0-4b78-b584-ed47892cd6be</elementGuidId>
    <selectorCollection>
       <entry>
          <key>XPATH</key>
-         <value>(//button[@type='button'])[2]</value>
+         <value>(.//*[normalize-space(text()) and normalize-space(.)='Estimated reading time:'])[1]/following::iframe[1]</value>
       </entry>
       <entry>
          <key>BASIC</key>
-         <value>//button[@class=&quot;vjs-big-play-button&quot;]</value>
+         <value>//body/div[contains(@class,'wrapper')]//div[contains(@class,'col-body')]/main/section/iframe</value>
       </entry>
    </selectorCollection>
    <selectorMethod>BASIC</selectorMethod>
@@ -21,36 +21,30 @@
       <matchCondition>equals</matchCondition>
       <name>xpath</name>
       <type>Main</type>
-      <value>//button[@class=&quot;vjs-big-play-button&quot;]</value>
+      <value>//body/div[contains(@class,'wrapper')]//div[contains(@class,'col-body')]/main/section/iframe</value>
    </webElementProperties>
    <webElementXpaths>
       <isSelected>true</isSelected>
       <matchCondition>equals</matchCondition>
-      <name>xpath:attributes</name>
-      <value>(//button[@type='button'])[2]</value>
-   </webElementXpaths>
-   <webElementXpaths>
-      <isSelected>false</isSelected>
-      <matchCondition>equals</matchCondition>
-      <name>xpath:idRelative</name>
-      <value>//div[@id='rzz16131_pr_zcdn82l7']/div[5]/button</value>
+      <name>xpath:neighbor</name>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Estimated reading time:'])[1]/following::iframe[1]</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='Progress'])[1]/following::button[1]</value>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='Quick Start'])[1]/following::iframe[1]</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:neighbor</name>
-      <value>(.//*[normalize-space(text()) and normalize-space(.)='ミュート'])[1]/preceding::button[1]</value>
+      <value>(.//*[normalize-space(text()) and normalize-space(.)='www.katalon.com'])[1]/preceding::iframe[1]</value>
    </webElementXpaths>
    <webElementXpaths>
       <isSelected>false</isSelected>
       <matchCondition>equals</matchCondition>
       <name>xpath:position</name>
-      <value>//div[5]/button</value>
+      <value>//iframe</value>
    </webElementXpaths>
 </WebElementEntity>

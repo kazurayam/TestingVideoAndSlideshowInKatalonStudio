@@ -8,7 +8,7 @@ def title = "Katalon Studio - Quick start"
 def waitSeconds = 11
 
 Boolean isInMotion = WebUI.callTestCase(
-	findTestCase('Test Cases/main/video/verifyYouTubeVideoAutoplay'),
+	findTestCase('main/video/YouTubePage_VideoAutoplay'),
 	[
 		'url': url,
 		'title': title,

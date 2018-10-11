@@ -18,7 +18,7 @@ WebUI.openBrowser('')
 
 WebUI.navigateToUrl('https://docs.katalon.com/katalon-studio/tutorials/quick_start.html')
 
-WebUI.click(findTestObject('Object Repository/Page_Quick Start  Katalon Docs/div__ytp-cued-thumbnail-overla'))
+WebUI.click(findTestObject('Page - Katalon Quick start/video_main'))
 
-WebUI.click(findTestObject('Object Repository/Page_Quick Start  Katalon Docs/button__ytp-play-button ytp-bu'))
+WebUI.click(findTestObject('Page - Katalon Quick start/button_ytp-play-button'))
 

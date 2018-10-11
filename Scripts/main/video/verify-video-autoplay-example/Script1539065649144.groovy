@@ -18,8 +18,11 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 import internal.GlobalVariable as GlobalVariable
 
-def url = "https://www.youtube.com/watch?v=WndOChZSjTk"
-def title = "Lets_Kinniku_Together"
+/*
+ * verify-video-autoplay-example
+ */
+def url = "https://www.youtube.com/watch?v=Q80JTXYIteU&feature=youtu.be"
+def title = "Katalon Studio - Quick start"
 def waitSeconds = 11
 def criteriaPercent = 90.0
 

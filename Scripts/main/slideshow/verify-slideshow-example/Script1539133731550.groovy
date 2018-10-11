@@ -18,6 +18,10 @@ import com.kms.katalon.core.testobject.TestObject
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
+/*
+ * verify-slideshow-example
+ */
+
 String url = 'https://www.mandel.org.uk/'
 String title = 'Mandelbrot Explorer'
 int intervalSeconds = 6

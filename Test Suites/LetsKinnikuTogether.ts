@@ -15,7 +15,7 @@
       <guid>1dd8b850-d3e5-4497-a2c8-50d6971bd8aa</guid>
       <isReuseDriver>false</isReuseDriver>
       <isRun>true</isRun>
-      <testCaseId>Test Cases/main/video/verifyNHKVideoStartStill</testCaseId>
+      <testCaseId>Test Cases/main/video/KatalonDocsPage_VideoStartStill</testCaseId>
       <variableLink>
          <testDataLinkId></testDataLinkId>
          <type>DEFAULT</type>
