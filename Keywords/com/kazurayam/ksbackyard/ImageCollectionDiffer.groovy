@@ -1,26 +1,36 @@
-package com.kazurayam.materials.visualtesting
+package com.kazurayam.ksbackyard
 
 import java.nio.file.Path
 import java.util.stream.Collectors
 
 import javax.imageio.ImageIO
 
-import com.kazurayam.ksbackyard.ScreenshotDriver.XImageDiff
+import com.kazurayam.ksbackyard.ScreenshotDriver.ImageDifference
 import com.kazurayam.materials.FileType
 import com.kazurayam.materials.Material
 import com.kazurayam.materials.MaterialPair
 import com.kazurayam.materials.MaterialRepository
+import com.kms.katalon.core.logging.KeywordLogger
+import com.kms.katalon.core.util.KeywordUtil
 
-public class CollectiveXImageDiffer {
+/**
+ * 
+ * This class depends on 2 external libraries:
+ * 1. AShot (https://github.com/yandex-qatools/ashot)
+ * 2. Materials (https://github.com/kazurayam/Materials)
+ * 
+ * @author kazurayam
+ */
+public class ImageCollectionDiffer {
 
 	private MaterialRepository mr_
-	private VTListener listener_
+	private VisualTestingListener listener_ = new DefaultVisualTestingListener()
 
-	CollectiveXImageDiffer(MaterialRepository mr) {
+	ImageCollectionDiffer(MaterialRepository mr) {
 		mr_ = mr
 	}
 
-	void setVTListener(VTListener listener) {
+	void setVTListener(VisualTestingListener listener) {
 		listener_ = listener
 	}
 
@@ -59,7 +69,7 @@ public class CollectiveXImageDiffer {
 		for (MaterialPair pair : materialPairs) {
 			Material expMate = pair.getExpected()
 			Material actMate = pair.getActual()
-			XImageDiff diff = new XImageDiff(
+			ImageDifference diff = new ImageDifference(
 					ImageIO.read(expMate.getPath().toFile()),
 					ImageIO.read(actMate.getPath().toFile()))
 
@@ -78,8 +88,8 @@ public class CollectiveXImageDiffer {
 			ImageIO.write(diff.getDiffImage(), "PNG", pngFile.toFile())
 
 			// verify the diffRatio, fail the test if the ratio is greater than criteria
-			if (diff.getDiffRatio() > criteriaPercent && listener_ != null) {
-				listener_.failed(">>> diffRatio = ${diff.getDiffRatio()} is exceeding criteria = ${criteriaPercent}")
+			if (diff.getRatio() > criteriaPercent && listener_ != null) {
+				listener_.failed(">>> diffRatio = ${diff.getRatio()} is exceeding criteria = ${criteriaPercent}")
 			}
 
 		}
@@ -94,21 +104,20 @@ public class CollectiveXImageDiffer {
 
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	String resolveImageDiffFilename(String profileExpected,
 			String profileActual,
 			Material expMate,
 			Material actMate,
-			XImageDiff diff,
+			ImageDifference diff,
 			Double criteriaPercent) {
 		//
 		String fileName = expMate.getPath().getFileName().toString()
 		String fileId = fileName.substring(0, fileName.lastIndexOf('.'))
 		String expTimestamp = expMate.getParent().getParent().getTSuiteTimestamp().format()
 		String actTimestamp = actMate.getParent().getParent().getTSuiteTimestamp().format()
-		Boolean failed = (diff.getDiffRatio() > criteriaPercent)
 		//
 		StringBuilder sb = new StringBuilder()
 		sb.append("${fileId}.")
@@ -116,8 +125,8 @@ public class CollectiveXImageDiffer {
 		sb.append("-")
 		sb.append("${actTimestamp}_${profileActual}")
 		sb.append(".")
-		sb.append("(${String.format('%.2f', diff.getDiffRatio())})")
-		sb.append("${(failed) ? 'FAILED' : ''}")
+		sb.append("(${diff.getRatioAsString()})")
+		sb.append("${(diff.imagesAreSimilar()) ? '' : 'FAILED'}")
 		sb.append(".png")
 		return sb.toString()
 	}
@@ -130,13 +139,13 @@ public class CollectiveXImageDiffer {
 	 */
 	class Statistics {
 
-		private List<XImageDiff> list_
+		private List<ImageDifference> list_
 
 		Statistics() {
-			list_ = new ArrayList<XImageDiff>()
+			list_ = new ArrayList<ImageDifference>()
 		}
 
-		void add(XImageDiff diff) {
+		void add(ImageDifference diff) {
 			list_.add(diff)
 		}
 
@@ -145,11 +154,11 @@ public class CollectiveXImageDiffer {
 			sb.append(">>> # diffRatio: ")
 			sb.append("[")
 			def count = 0
-			for (XImageDiff diff : list_) {
+			for (ImageDifference diff : list_) {
 				if (count > 0) {
 					sb.append(", ")
 				}
-				sb.append(String.format('%.2f', diff.getDiffRatio()))
+				sb.append(diff.getRatioAsString())
 				count += 1
 			}
 			sb.append("] percent")
@@ -158,8 +167,8 @@ public class CollectiveXImageDiffer {
 
 		Double diffRatioAverage() {
 			Double sum = 0.0
-			for (XImageDiff diff : list_) {
-				sum += diff.getDiffRatio()
+			for (ImageDifference diff : list_) {
+				sum += diff.getRatio()
 			}
 			return sum / list_.size()
 		}
@@ -167,8 +176,8 @@ public class CollectiveXImageDiffer {
 		Double evalStandardDeviation() {
 			Double average = this.diffRatioAverage()
 			Double s = 0.0
-			for (XImageDiff diff : list_) {
-				s += (average - diff.getDiffRatio()) * (average - diff.getDiffRatio())
+			for (ImageDifference diff : list_) {
+				s += (average - diff.getRatio()) * (average - diff.getRatio())
 			}
 			return Math.sqrt(s / list_.size)
 		}
@@ -179,4 +188,45 @@ public class CollectiveXImageDiffer {
 			return average + stddevi * factor
 		}
 	}
+
+
+	/**
+	 *
+	 * @author kazurayam
+	 *
+	 */
+	static interface VisualTestingListener {
+
+		void info(String message)
+
+		void failed(String message)
+
+		void fatal(String message)
+	}
+
+
+
+	/**
+	 *
+	 * @author kazurayam
+	 */
+	static class DefaultVisualTestingListener implements VisualTestingListener {
+
+		private KeywordLogger logger = new KeywordLogger()
+
+		void info(String message) {
+			logger.logWarning(message)
+		}
+
+		void failed(String message) {
+			logger.logFailed(message)
+			KeywordUtil.markFailed(message)
+		}
+
+		void fatal(String message) {
+			logger.logFailed(message)
+			KeywordUtil.markFailedAndStop(message)
+		}
+	}
+
 }

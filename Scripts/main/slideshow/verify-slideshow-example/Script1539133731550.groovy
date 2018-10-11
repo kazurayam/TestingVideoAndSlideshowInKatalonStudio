@@ -33,7 +33,7 @@ Files.createDirectories(tmpDir)
 
 // open browser
 //WebUI.openBrowser('')
-CustomKeywords.'com.kazurayam.KazurayamSpecifics.openBrowser'()
+CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
 
 WebUI.setViewPortSize(1024,768)
 WebDriver driver = DriverFactory.getWebDriver()

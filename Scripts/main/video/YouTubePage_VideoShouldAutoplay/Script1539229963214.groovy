@@ -25,7 +25,7 @@ MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
 assert mr != null
 
 //WebUI.openBrowser('')
-CustomKeywords.'com.kazurayam.KazurayamSpecifics.openBrowser'()
+CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
 
 WebUI.setViewPortSize(1024, 768)
 WebDriver driver = DriverFactory.getWebDriver()

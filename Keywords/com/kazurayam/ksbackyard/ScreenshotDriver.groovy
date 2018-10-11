@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.JavascriptExecutor
 
 import com.kazurayam.materials.MaterialRepository
-import com.kazurayam.materials.visualtesting.CollectiveXImageDiffer
+import com.kazurayam.ksbackyard.ImageCollectionDiffer
 import com.kms.katalon.core.annotation.Keyword
 import com.kms.katalon.core.webui.driver.DriverFactory
 
@@ -52,8 +52,8 @@ class ScreenshotDriver {
 	static def makeDiffs(String profileExpected = 'product', String profileActual = 'develop', String tSuiteName,
 			Double criteriaPercent = 3.0) {
 
-		CollectiveXImageDiffer cid = new CollectiveXImageDiffer(mr_)
-		cid.makeDiffs(profileExpected, profileActual, tSuiteName, GlobalVariable.CURRENT_TESTCASE_ID, criteriaPercent)
+		ImageCollectionDiffer icd = new ImageCollectionDiffer(mr_)
+		icd.makeDiffs(profileExpected, profileActual, tSuiteName, GlobalVariable.CURRENT_TESTCASE_ID, criteriaPercent)
 	}
 
 
