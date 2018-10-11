@@ -12,7 +12,7 @@ def title = "Katalon Docs - Quick start"
 def waitSeconds = 5
 
 Boolean isStayingStill = WebUI.callTestCase(
-	findTestCase('main/video/KatalonDocsPage_VideoStartStill'),
+	findTestCase('main/video/DocsPage_VideoShouldStartStill'),
 	[
 		'url': url,
 		'title': title,

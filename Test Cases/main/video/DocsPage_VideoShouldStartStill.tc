@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>YouTubePage_VideoAutoplay</name>
+   <name>DocsPage_VideoShouldStartStill</name>
    <tag></tag>
    <comment></comment>
-   <testCaseGuid>b9c76eb5-8f10-4a42-bfc5-ffcccc757b5b</testCaseGuid>
+   <testCaseGuid>1c8665e9-f1d5-412a-ba23-fb51b0dd7fc7</testCaseGuid>
    <variable>
-      <defaultValue>'https://www.youtube.com/watch?v=WndOChZSjTk'</defaultValue>
+      <defaultValue>'https://docs.katalon.com/katalon-studio/tutorials/quick_start.html'</defaultValue>
       <description></description>
-      <id>7262eead-095f-413c-8491-aa90fca436b2</id>
+      <id>439295a2-86c1-45e7-9df9-9ed31083f4e3</id>
       <masked>false</masked>
       <name>url</name>
    </variable>
    <variable>
-      <defaultValue>'Lets_Kinniku_Together'</defaultValue>
+      <defaultValue>'Katalon Docs Quick start'</defaultValue>
       <description></description>
-      <id>b2d0ee63-7f73-4a5e-a248-6115886cfef1</id>
+      <id>aff5784f-0d0e-4b46-9d7f-7d816e0e598b</id>
       <masked>false</masked>
       <name>title</name>
    </variable>
    <variable>
-      <defaultValue>10</defaultValue>
+      <defaultValue>5</defaultValue>
       <description></description>
-      <id>48e78d41-c30e-4a66-9a5b-fd682bb926d1</id>
+      <id>7866f90d-d101-4b6a-82f5-2abf4ca9d50a</id>
       <masked>false</masked>
       <name>waitSeconds</name>
    </variable>
    <variable>
-      <defaultValue>90.0</defaultValue>
+      <defaultValue>10.0</defaultValue>
       <description></description>
-      <id>f92cab72-32c2-4b33-9fee-2f5c190441cd</id>
+      <id>0d526a1d-ad04-49a2-832b-458a23adad69</id>
       <masked>false</masked>
       <name>criteriaPercent</name>
    </variable>

@@ -58,6 +58,8 @@ WebUI.verifyElementPresent(playButtonTestObject, 10, FailureHandling.STOP_ON_FAI
 WebElement playButton = driver.findElement(
 	By.xpath(playButtonTestObject.findPropertyValue('xpath')))
 
+WebUI.delay(3)
+
 // verify if the YouTube Vido started still
 ImageDifference difference =
 	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoStartsStill'(

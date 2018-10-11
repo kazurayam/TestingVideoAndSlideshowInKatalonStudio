@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>YouTubePage_VideoAutoplay_Katalon Docs Quick start</name>
+   <name>YouTubePage_VideoShouldAutoplay_Katalon Studio Quick start</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>b395588f-aab8-4442-99c3-ad9479936373</testCaseGuid>

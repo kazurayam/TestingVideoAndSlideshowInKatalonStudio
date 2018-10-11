@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TestCaseEntity>
    <description></description>
-   <name>KatalonDocsPage_VideoStartStill_Quick start</name>
+   <name>DocsPage_VideoShouldStartStill_Katalon Studio Quick start</name>
    <tag></tag>
    <comment></comment>
    <testCaseGuid>f27255dd-1bfd-4251-b719-f9bd5d649066</testCaseGuid>

@@ -4,11 +4,11 @@ import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 def url = "https://www.youtube.com/watch?v=Q80JTXYIteU&feature=youtu.be"
-def title = "Katalon Studio - Quick start"
+def title = "Katalon Studio Quick start"
 def waitSeconds = 11
 
 Boolean isInMotion = WebUI.callTestCase(
-	findTestCase('main/video/YouTubePage_VideoAutoplay'),
+	findTestCase('main/video/YouTubePage_VideoShouldAutoplay'),
 	[
 		'url': url,
 		'title': title,
