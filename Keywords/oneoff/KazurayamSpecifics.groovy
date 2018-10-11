@@ -11,7 +11,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 public class KazurayamSpecifics {
 
 	/**
-	 * open browser: open Chrome of his own, one Firefox and others using WebUI.openBrowser()
+	 * open browser: open Chrome for his own, open Firefox and other browsers using WebUI.openBrowser()
 	 * 
 	 * kazurayam has a specific reason why he needs special chrome.
 	 * see https://forum.katalon.com/discussion/6150/google-chrome-crashed-on-my-pc-2-reasons-found
