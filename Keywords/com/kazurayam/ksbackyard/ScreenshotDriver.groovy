@@ -81,15 +81,12 @@ class ScreenshotDriver {
 	 * 
 	 * @param webDriver
 	 * @param webElement
-	 * @param output
+	 * @param file 
 	 */
 	@Keyword
-	static void saveElementImage(WebDriver webDriver, WebElement webElement, Path output) {
-		if (!Files.exists(output.getParent())) {
-			Files.createDirectories(output.getParent())
-		}
+	static void saveElementImage(WebDriver webDriver, WebElement webElement, File file) {
 		BufferedImage image = takeElementImage(webDriver, webElement)
-		ImageIO.write(image, "PNG", output.toFile())
+		ImageIO.write(image, "PNG", file)
 	}
 
 
