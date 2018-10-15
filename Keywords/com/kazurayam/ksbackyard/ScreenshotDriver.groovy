@@ -1,22 +1,15 @@
 package com.kazurayam.ksbackyard
 
 import java.awt.image.BufferedImage
-import java.nio.file.Files
-import java.nio.file.Path
-import java.util.Map
 
 import javax.imageio.ImageIO
 
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import org.openqa.selenium.JavascriptExecutor
 
-import com.kazurayam.materials.MaterialRepository
-import com.kazurayam.ksbackyard.ImageCollectionDiffer
 import com.kms.katalon.core.annotation.Keyword
-import com.kms.katalon.core.webui.driver.DriverFactory
+import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-import internal.GlobalVariable
 import ru.yandex.qatools.ashot.AShot
 import ru.yandex.qatools.ashot.Screenshot
 import ru.yandex.qatools.ashot.comparison.ImageDiff
@@ -24,40 +17,12 @@ import ru.yandex.qatools.ashot.comparison.ImageDiffer
 import ru.yandex.qatools.ashot.coordinates.WebDriverCoordsProvider
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies
 
-import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
 /**
  * 
  * @author kazurayam
  *
  */
 class ScreenshotDriver {
-
-	static MaterialRepository mr_ = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
-
-	static {
-		assert mr_ != null
-	}
-
-
-	/**
-	 * @deprecated do no use this method. use CollectiveXImageDiffer instead.
-	 * 
-	 * @param profileExpected e.g., 'product'
-	 * @param profileAcutual  e.g., 'develop'
-	 * @param tSuiteName      e.g., 'TS1'
-	 * @param criteriaPercent e.g.,  3.83
-	 * @return
-	 */
-	static def makeDiffs(String profileExpected = 'product', String profileActual = 'develop', String tSuiteName,
-			Double criteriaPercent = 3.0) {
-
-		ImageCollectionDiffer icd = new ImageCollectionDiffer(mr_)
-		icd.makeDiffs(profileExpected, profileActual, tSuiteName, GlobalVariable.CURRENT_TESTCASE_ID, criteriaPercent)
-	}
-
-
-
 
 	/**
 	 * takes screenshot of the specified WebElement in the target WebPage,
@@ -84,12 +49,9 @@ class ScreenshotDriver {
 	 * @param output
 	 */
 	@Keyword
-	static void saveElementImage(WebDriver webDriver, WebElement webElement, Path output) {
-		if (!Files.exists(output.getParent())) {
-			Files.createDirectories(output.getParent())
-		}
+	static void saveElementImage(WebDriver webDriver, WebElement webElement, File file) {
 		BufferedImage image = takeElementImage(webDriver, webElement)
-		ImageIO.write(image, "PNG", output.toFile())
+		ImageIO.write(image, "PNG", file)
 	}
 
 
@@ -100,6 +62,7 @@ class ScreenshotDriver {
 	 *
 	 * @param webDriver
 	 * @param webElement
+	 * @param timeout millisecond, wait for page to be displayed after scrolling downward to view next viewport
 	 * @return BufferedImage
 	 */
 	@Keyword
@@ -124,10 +87,6 @@ class ScreenshotDriver {
 		ImageIO.write(image, "PNG", file)
 	}
 
-
-
-
-
 	/**
 	 * @deprecated use saveEntirePageImage(WebDriver, File, Integer) instead
 	 * @param webDriver
@@ -137,6 +96,8 @@ class ScreenshotDriver {
 	static void takeEntirePage(WebDriver webDriver, File file, Integer timeout = 300) {
 		saveEntirePageImage(webDriver, file, timeout)
 	}
+
+
 
 
 	/**
@@ -247,7 +208,8 @@ class ScreenshotDriver {
 
 
 	/**
-	 * wraps aShot's ImageDiff object, plus a few getter methods
+	 * a Wrapper class for aShot's ImageDiff object;
+	 * this provides a few utility methods including imagesAreDifferent() and imagesAreSimilar()
 	 */
 	static class ImageDifference {
 
@@ -330,7 +292,8 @@ class ScreenshotDriver {
 
 		/**
 		 * @return true if the expected image and the actual image pair has
-		 *         smaller difference than the criteria = these are similar enough,
+		 *         smaller difference than the criteria or equal difference,
+		 *         this means these 2 images are similar enough,
 		 *         otherwise false.
 		 */
 		Boolean imagesAreSimilar() {

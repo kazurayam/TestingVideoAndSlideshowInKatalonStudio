@@ -20,7 +20,7 @@ public class KazurayamSpecifics {
 	static void openBrowser() {
 		WebUIDriverType executedBrowser = DriverFactory.getExecutedBrowser()
 		if (executedBrowser == WebUIDriverType.CHROME_DRIVER           &&
-		System.getProperty('user.home').startsWith('C:\\Users\\qc')
+			System.getProperty('user.home').startsWith('C:\\Users\\qc')
 		) {
 			System.setProperty('webdriver.chrome.driver', DriverFactory.getChromeDriverPath())
 			WebDriver driver = new ChromeDriver()

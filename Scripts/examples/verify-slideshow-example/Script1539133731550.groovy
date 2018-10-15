@@ -58,7 +58,7 @@ for (int i = 0; i < slideCount; i++) {
 	Path out = tmpDir.resolve("${title}_${i}.png")
 	ImageIO.write(img, "PNG", out.toFile())
 	imageList.add(img)
-	// wait for the slide change
+	// wait for the slide to change
 	WebUI.delay(intervalSeconds)
 }
 
@@ -75,7 +75,7 @@ for (int i = 0; i < slideCount; i++) {
 	Path out = tmpDir.resolve("${title}_diff_${i}x${x}(${difference.getRatioAsString()}).png")
 	ImageIO.write(difference.getDiffImage(), "PNG", out.toFile())
 	
-	// report FAILURE when one or more pairs look not different enough = looks unchanged
+	
 	CustomKeywords.'com.kazurayam.ksbackyard.Assert.assertTrue'(
 		"diff_${i}x${x} looks unchanged",
 		difference.imagesAreDifferent())

@@ -21,6 +21,7 @@ import internal.GlobalVariable as GlobalVariable
 /*
  * verify-video-autoplay-example
  */
+
 def url = "https://www.youtube.com/watch?v=Q80JTXYIteU&feature=youtu.be"
 def title = "Katalon Studio - Quick start"
 def waitSeconds = 11
@@ -81,8 +82,8 @@ println "['url':${url}, 'title':'${title}', " +
 // now we know if the movie autoplaying or not
 Boolean isInMotion = difference.imagesAreDifferent()
 
-// record the result of evaluation: pass when the Video is in motion, otherwise fail.
-// Output message into the log
+// ensure the 2 images look different enought = Movie autostarted,
+// in other words report FAILURE when images look not different enough = Movie start still.
 CustomKeywords.'com.kazurayam.ksbackyard.Assert.assertTrue'(
 	"movie ${title} at ${url} is not autoplaying",
 	isInMotion,
