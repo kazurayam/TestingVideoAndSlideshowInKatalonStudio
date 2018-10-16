@@ -46,7 +46,7 @@ class ScreenshotDriver {
 	 * 
 	 * @param webDriver
 	 * @param webElement
-	 * @param output
+	 * @param file 
 	 */
 	@Keyword
 	static void saveElementImage(WebDriver webDriver, WebElement webElement, File file) {
