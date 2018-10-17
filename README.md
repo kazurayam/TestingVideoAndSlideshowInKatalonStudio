@@ -52,7 +52,16 @@ The demo will open the following URL. Both embeds the same video clip: 'Kataln S
 
 ### Output
 
-Running `Test Cases/examples/vefiry-video-autoplay-example` will result
+Running `Test Cases/examples/vefiry-video-autoplay-example` will result `<project folder>/tmp/video` directory.
+![tmp/video](docs/images/tmp_video.png)
+
+In the folder you would find 3 image files.
+- Katalon Studio - Quick start_1st.png  [1st](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20start_1st.png)
+- Katalon Studio - Quick start_2nd.png  [2nd](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20start_2nd.png)
+- Katalon Studio - Quick start_diff(100.00) [diff](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20diff%28100.00%29.png)
+
+
+
 
 
 ## What happens? when you encounter a real YouTube trouble
