@@ -60,9 +60,23 @@ In the folder you would find 3 image files.
 - Katalon Studio - Quick start_2nd.png  [2nd](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20start_2nd.png)
 - Katalon Studio - Quick start_diff(100.00) [diff](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20diff%28100.00%29.png)
 
+The 1st screenshot and 2nd screenshot are completely different. Therefore the difference image is painted 100% red. The test case PASSES as it expects the video to autoplay, and the video actually autoplays.
 
+## Code description
 
+Custom keywords:
 
+- [`com.kazurayam.ksbackyard.YouTubeVideoVerifier`](Keywords/com/kazurayam/ksbackyard/YouTubeVideoVerifier.groovy) --- please read the comments to see how the `verifyVideoInMotion` method and `verifyVideoStartsStill`
+- [`com.kazurayam.ksbackyard.ScreenshotDriver`](Keywords/com/kazurayam/ksbackyard/ScreenshotDriver.groovy)
+- [`com.kazurayam.ksbackyard.Assert`](Keywords/com/kazurayam/ksbackyard/Assert.groovy)
+
+Test Listener
+- [`Test Listeners/TL`](Test%20Listeners/TL.groovy)
+
+Test Case:
+- ['Test Cases/example/verify-video-autoplay-example'](Scripts/examples/verify-video-autoplay-example/Script1539742369958.groovy)
+
+there are a few more Test cases under `Test Cases/main/video` folder. These are called by the Test Suite `Test Suites/Katalon Studio Quick start`. This test suite is a component of the Test Suite Collection `Execute - verify video`. These test cases are almost simmilar to `verify-video-autoplay-example` though some parameters' value are different.
 
 ## What happens? when you encounter a real YouTube trouble
 
@@ -78,8 +92,23 @@ The test case emitted an ImageDiff as follows:
 
 This incident proved, just accidentally, that my approach of *verifying YouTube video autoplay or not* is capable of detecting actual YoutTube problems when they happen.
 
+
+## Step by step instruction to create your YouTube video test
+
+
+If you want to create a new Katalon Studio project which verifies a YouTube video embeded in your target web page, please do as follows:
+
+1. create a new Katalon Studio project for you
+2. import the jar file of aShot into the project. see the Katalon document [How to import external library into your automation project ](https://docs.katalon.com/katalon-studio/tutorials/import_java_library.html). The jar of aShot is [here](https://mvnrepository.com/artifact/ru.yandex.qatools.ashot/ashot/1.5.4). Or you can reuse the ashot-x.x.x.jar bundled in the demo project's  `./Drivers` folder.
+3. import the jar file of Materials. The jar file is donwloadable at [Releases](https://github.com/kazurayam/Materials/releases) page. Or you can reuse the Materials-x.x.x.jar bundled in the demo project's `./Drivers` folder.
+![Drivers](docs/images/Drivers.PNG)
+4. create 3 custom keywords:  [`com.kazurayam.ksbackyard.Assert`](Keywords/com/kazurayam/ksbackyard/Assert.groovy), [`com.kazurayam.ksbackyard.ScreenshotDriver`](Keywords/com/kazurayam/ksbackyard/ScreenshotDriver.groovy) and [`com.kazurayam.ksbackyard.YouTubeVideoVerifier`](Keywords/com/kazurayam/ksbackyard/YouTubeVideoVerifier.groovy). Copy the Groovy sources from the demo project into your replication. You do not have to modify the source of those keywords. ![Keywords](docs/images/Keywords.PNG)
+5. create [`Test Listeners/TL`](Test%20Listeners/TL.groovy). Copy the Groovy source from the demo project into your replication. You do not have to modify the source.
+6. modify the `default` Profile and add 2 GlobalVariables: `MATERIAL_REPOSITORY` of type Null, `CURRENT_TESTCASE_ID` of type String. No inital value required. The Test Listener `TL` will resolve appropriate values runtime. ![GlobalVariables_default](docs/images/GlobalVariables_default.PNG)
+7. Finally you need to develop test cases and test suites. Create a mimic of [`Test Cases/examples/verify-video-autoplay-example`](Scripts/examples/verify-slideshow-example/Script1539742369958.groovy) and modify it as you would like. I have written as much comments in the Groovy source. Read them and find how to customize to meet your requirements.
+
 ## Conclusion
 
-What have I learned by the experiment? I learned that verifying video is a complicated task. My study is poor. My Custom Keywords are short for supporting the complexities of video.
+What have I learned while developing this demo project? I learned that verifying video is a very much complicated task. My study is poor. My Custom Keywords are far short for supporting the complexities of video.
 
-I would not go on this issue anymore.
+I gave up. I would not go on this issue anymore.

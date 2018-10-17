@@ -24,8 +24,8 @@ Double criteriaPercent = 90.0
 MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
 assert mr != null
 
-//WebUI.openBrowser('')
-CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
+WebUI.openBrowser('')
+//CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
 
 WebUI.setViewPortSize(1024, 768)
 WebDriver driver = DriverFactory.getWebDriver()

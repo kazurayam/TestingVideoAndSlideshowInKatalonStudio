@@ -29,8 +29,9 @@ Double criteriaPercent = 90.0
 MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
 assert mr != null
 
-//WebUI.openBrowser('')
-CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
+WebUI.openBrowser('')
+//CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
+
 WebDriver driver = DriverFactory.getWebDriver()
 
 // start loading the Katalon Docs page
