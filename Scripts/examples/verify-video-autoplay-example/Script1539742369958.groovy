@@ -6,6 +6,7 @@ import java.nio.file.Paths
 
 import javax.imageio.ImageIO
 
+import org.apache.commons.io.FileUtils
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -16,19 +17,17 @@ import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
-import internal.GlobalVariable as GlobalVariable
-
 /*
  * verify-video-autoplay-example
  */
 
-def url = "https://www.youtube.com/watch?v=Q80JTXYIteU&feature=youtu.be"
+def url = "https://www.youtube.com/watch?v=Q80JTXYIteU"
 def title = "Katalon Studio - Quick start"
 def waitSeconds = 11
 def criteriaPercent = 90.0
 
-//WebUI.openBrowser('')
-CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
+WebUI.openBrowser('')
+//CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
 
 WebUI.setViewPortSize(1024, 768)
 WebDriver driver = DriverFactory.getWebDriver()
@@ -49,12 +48,15 @@ WebElement playButton = driver.findElement(By.cssSelector("button.ytp-play-butto
 
 // verify if the YouTube Video is autoplaying or not
 ImageDifference difference =
-	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoInMotion'(
+	CustomKeywords.'com.kazurayam.ksbackyard.YouTubeVideoVerifier.verifyVideoInMotion'(
 		driver, mainVideo, playButton,
 		waitSeconds, criteriaPercent)
-		
+
 // create tmp dir where we store the PNG files
 Path tmpDir = Paths.get(RunConfiguration.getProjectDir()).resolve('tmp/video')
+if (Files.exists(tmpDir)) {
+	FileUtils.cleanDirectory(tmpDir.toFile())
+}
 Files.createDirectories(tmpDir)
 
 // write the screenshot taken at the start
@@ -66,16 +68,16 @@ Path png2 = tmpDir.resolve("${title}_2nd.png")
 ImageIO.write(difference.getActualImage(), "PNG", png2.toFile())
 
 // write the image of difference between the above 2 screenshots
-String descriptor = 
-    "(${difference.getRatioAsString()})" + 
-    "${difference.imagesAreDifferent()?'':'FAILED'}"
+String descriptor =
+	"(${difference.getRatioAsString()})" +
+	"${difference.imagesAreDifferent()?'':'FAILED'}"
 Path pngDiff = tmpDir.resolve("${title}_diff${descriptor}.png")
 ImageIO.write(difference.getDiffImage(), "PNG", pngDiff.toFile())
 
 WebUI.closeBrowser()
 
-println "['url':${url}, 'title':'${title}', " + 
-    "'difference.getEvaluated()':${difference.imagesAreDifferent()}" + 
+println "['url':${url}, 'title':'${title}', " +
+	"'difference.getEvaluated()':${difference.imagesAreDifferent()}" +
 	", 'difference.getRatio()':${difference.getRatio()}" +
 	", 'difference.getCriteria()':${difference.getCriteria()}]]"
 
@@ -88,4 +90,3 @@ CustomKeywords.'com.kazurayam.ksbackyard.Assert.assertTrue'(
 	"movie ${title} at ${url} is not autoplaying",
 	isInMotion,
 	FailureHandling.CONTINUE_ON_FAILURE)
-

@@ -29,8 +29,9 @@ Double criteriaPercent = 90.0
 MaterialRepository mr = (MaterialRepository)GlobalVariable.MATERIAL_REPOSITORY
 assert mr != null
 
-//WebUI.openBrowser('')
-CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
+WebUI.openBrowser('')
+//CustomKeywords.'oneoff.KazurayamSpecifics.openBrowser'()
+
 WebDriver driver = DriverFactory.getWebDriver()
 
 // start loading the Katalon Docs page
@@ -63,7 +64,7 @@ WebUI.delay(3)
 
 // verify if the YouTube Vido started still
 ImageDifference difference =
-	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoStartsStill'(
+	CustomKeywords.'com.kazurayam.ksbackyard.YouTubeVideoVerifier.verifyVideoStartsStill'(
 		driver, mainVideo)
 
 // write the screenshot taken at the start
