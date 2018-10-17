@@ -7,47 +7,40 @@ This is a [Katalon Studio](https://www.katalon.com/) project for demonstration p
 
 This project was developed using Katalon Studio 5.7.1.
 
-This project was developed to propose solutions to the following 2 discussions posted in the [Katalon Forum](https://forum.katalon.com/discussions).
+This project was developed to propose solutions to the following 2 discussions posted in the [Katalon Forum](https://forum.katalon.com/discussions) : [Not able to verify whether a youtube video is working properly or not.](https://forum.katalon.com/discussion/9904/not-able-to-verify-whether-a-youtube-video-is-working-properly-or-not).
+The original question was as follows:
+>How to verify whether a youtube video is working properly or not. My scenario is to click on any video which in turn opens in a pop up. Then play the video to verify whether its playing or not and then click on pause button to verify whether it stops or not. And then close the video pop up.
 
-1. [Verify Image Present in slideshow](https://forum.katalon.com/discussion/9985/verify-image-present-in-slideshow-)
-2. [Not able to verify whether a youtube video is working properly or not.](https://forum.katalon.com/discussion/9904/not-able-to-verify-whether-a-youtube-video-is-working-properly-or-not)
+## Problems to solve
 
-----
+You can make a web page which embeds a YouTube video. YouTube video itself is usually marked up with video element like this:
+```
+<video src="https://www.youtube.com/watch?v=Q80JTXYIteU">
+```
 
-## Testing Slide show
+And the page is expected to have a start/stop button like this:
+```
+<button class="ytp-play-button ytp-button" aria-label=Play>
+    ...
+</button>
+```
 
-### Problems to solve
+When a web page with embeded video loaded, the video may autoplay on load or stay still. It depends on how the page is designed and configured. I want to verify if the video element autoplays as expected, or it stays still as designed. I want to do the verification in Katalon Studio.
 
-Many web sites have slide show in the top page. For example, have a look at this beautiful site: [Mandelbrot Explorer](https://www.mandel.org.uk/). A slide show displays a fixed number of images switched circularly with a fixed intervals in seconds. I want to verify *if a slide show is in motion*.
+## What I learned by the experiment
 
+Verifying video is a very complicated task. My study is poor. My study has failed to conceal the complexities of video. I have given up diving into the depth anymore. 
 
-### Solution
+## What happens? when you encounter a real YouTube trouble
 
-[aShot](https://github.com/yandex-qatools/ashot), WebDriver Screenshot utility, enables you to take a screenshot of a selected WebElement (e.g. `<div id="banner">`). Also aShot enables you to compare 2 images of the WebElement to figure out how much different they are.
+At 10:30AM 17,Oct 2018 JST, I encountered a real YouTube trouble.
+When I requested https://www.youtube.com/watch?v=Q80JTXYIteU with browser, the page was responed. But the video in the page was black and
+showed a message 'sorry for inconvenience'. Wow! What a good chance to evaluate my study I got.
 
-Let me suppose a slide show has 4 images displayed circularly with 6 seconds interval. I will take screenshot of the `<div id="banner">` element using aShot with 6 seconds delay. Then I will compare 4 pairs of images: img0-img1, img1-img2, img2-img3, img3-img0. All of the pairs are expected to be *different enough* when the slide show is in motion. If one or more pairs are found *not different enough*, then the test should fail and notify me of the failure.
+I ran the `Test Cases/verify-video-autoplay-example`. The test case failed AS EXPECTED.
+![encounted_YouTube_trouble_1d YouTube trouble 1](docs/images/encountered_YouTube_trouble_1.png)
 
-### Demonstration, how to run it
+The test case emitted an ImageDiff as follows:
+![encountered diff](docs/images/Katalon%20Studio%20-%20Quick%20start_diff%2812.09%29FAILED.png)
 
-This Katalon Studio project provides a set of Custom Keywords in Katalon Studio, which wrap the [aShot](https://github.com/yandex-qatools/ashot) API. Also the project provides an example Test Case which shows how to make use of the keywords.
-
-
-### Code description
-
-### Thanks
-
-Special thanks to [Mandelbrot Explorer](https://www.mandel.org.uk/). I picked up this as an example of web site with slide show. I found it in the page of Drupal Module [Views Slideshow](https://www.drupal.org/project/views_slideshow).
-
-----
-## Testing YouTube Video
-
-### Problems to solve
-
-### Solution
-
-### Demonstration, how to run it
-
-### Code description
-
-1. Want to verify a YouTube video is actually autoplaying if the target web page is designed to autoplay the video. Also want to verify a YouTube video is staying still if the target web page is desinged NOT to autoplay it.
-2. Want to verify a
+This incident happend to prove that my approach of *verifying YouTube video autoplay or not* is capable of detecting actual YoutTube problem.

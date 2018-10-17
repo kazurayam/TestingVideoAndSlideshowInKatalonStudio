@@ -46,7 +46,7 @@ WebElement playButton = driver.findElement(By.cssSelector("button.ytp-play-butto
 
 // verify if the YouTube Vido is autoplaying or not
 ImageDifference difference = 
-	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoInMotion'(
+	CustomKeywords.'com.kazurayam.ksbackyard.YouTubeVideoVerifier.verifyVideoInMotion'(
 		driver, mainVideo, playButton,
 		waitSeconds, criteriaPercent)
 

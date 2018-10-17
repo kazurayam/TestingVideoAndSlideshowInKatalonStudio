@@ -63,7 +63,7 @@ WebUI.delay(3)
 
 // verify if the YouTube Vido started still
 ImageDifference difference =
-	CustomKeywords.'com.kazurayam.ksbackyard.ScreenshotDriver.verifyVideoStartsStill'(
+	CustomKeywords.'com.kazurayam.ksbackyard.YouTubeVideoVerifier.verifyVideoStartsStill'(
 		driver, mainVideo)
 
 // write the screenshot taken at the start
