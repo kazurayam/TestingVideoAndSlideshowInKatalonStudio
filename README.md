@@ -58,9 +58,9 @@ Running `Test Cases/examples/vefiry-video-autoplay-example` will result `<projec
 In the folder you would find 3 image files.
 - Katalon Studio - Quick start_1st.png  [1st](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20start_1st.png)
 - Katalon Studio - Quick start_2nd.png  [2nd](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20start_2nd.png)
-- Katalon Studio - Quick start_diff(100.00) [diff](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20diff%28100.00%29.png)
+- Katalon Studio - Quick start_diff(100.00) [diff](docs/images/tmp/video/Katalon%20Studio%20-%20Quick%20start_diff%28100.00%29.png)
 
-The 1st screenshot and 2nd screenshot are completely different. Therefore the difference image is painted 100% red. The test case PASSES as it expects the video to autoplay, and the video actually autoplays.
+The 1st screenshot taken on load and 2nd screenshot taken after a few seconds --- these 2 images differs completely. Therefore the diff image is painted 100% red. The test case PASSES as it expects the video to autoplay. This fact implies that the video actually autoplayed.
 
 ## Code description
 
@@ -82,7 +82,7 @@ there are a few more Test cases under `Test Cases/main/video` folder. These are 
 
 At 10:30AM 17,Oct 2018 JST, I encountered a real YouTube trouble.
 When I requested https://www.youtube.com/watch?v=Q80JTXYIteU with browser, the page was responed. But the video in the page was black and
-showed a message 'sorry for inconvenience'. Wow! What a good chance to evaluate my study I got.
+showed a message 'error occured. please retry later'. Wow! What a good chance to evaluate my study I got.
 
 I ran the `Test Cases/verify-video-autoplay-example`. The test case failed AS EXPECTED.
 ![encounted_YouTube_trouble_1d YouTube trouble 1](docs/images/encountered_YouTube_trouble_1.png)
@@ -105,7 +105,7 @@ If you want to create a new Katalon Studio project which verifies a YouTube vide
 4. create 3 custom keywords:  [`com.kazurayam.ksbackyard.Assert`](Keywords/com/kazurayam/ksbackyard/Assert.groovy), [`com.kazurayam.ksbackyard.ScreenshotDriver`](Keywords/com/kazurayam/ksbackyard/ScreenshotDriver.groovy) and [`com.kazurayam.ksbackyard.YouTubeVideoVerifier`](Keywords/com/kazurayam/ksbackyard/YouTubeVideoVerifier.groovy). Copy the Groovy sources from the demo project into your replication. You do not have to modify the source of those keywords. ![Keywords](docs/images/Keywords.PNG)
 5. create [`Test Listeners/TL`](Test%20Listeners/TL.groovy). Copy the Groovy source from the demo project into your replication. You do not have to modify the source.
 6. modify the `default` Profile and add 2 GlobalVariables: `MATERIAL_REPOSITORY` of type Null, `CURRENT_TESTCASE_ID` of type String. No inital value required. The Test Listener `TL` will resolve appropriate values runtime. ![GlobalVariables_default](docs/images/GlobalVariables_default.PNG)
-7. Finally you need to develop test cases and test suites. Create a mimic of [`Test Cases/examples/verify-video-autoplay-example`](Scripts/examples/verify-slideshow-example/Script1539742369958.groovy) and modify it as you would like. I have written as much comments in the Groovy source. Read them and find how to customize to meet your requirements.
+7. Finally you need to develop test cases and test suites. Create a mimic of [`Test Cases/examples/verify-video-autoplay-example`](Scripts/examples/verify-video-autoplay-example/Script1539742369958.groovy) and modify it as you would like. I have written as much comments in the Groovy source. Read them and find how to customize to meet your requirements.
 
 ## Conclusion
 
