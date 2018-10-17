@@ -6,6 +6,7 @@ import java.nio.file.Paths
 
 import javax.imageio.ImageIO
 
+import org.apache.commons.io.FileUtils
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -15,8 +16,6 @@ import com.kms.katalon.core.configuration.RunConfiguration
 import com.kms.katalon.core.model.FailureHandling
 import com.kms.katalon.core.webui.driver.DriverFactory
 import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
-
-import internal.GlobalVariable as GlobalVariable
 
 /*
  * verify-video-autoplay-example
@@ -55,6 +54,9 @@ ImageDifference difference =
 
 // create tmp dir where we store the PNG files
 Path tmpDir = Paths.get(RunConfiguration.getProjectDir()).resolve('tmp/video')
+if (Files.exists(tmpDir)) {
+	FileUtils.cleanDirectory(tmpDir.toFile())
+}
 Files.createDirectories(tmpDir)
 
 // write the screenshot taken at the start

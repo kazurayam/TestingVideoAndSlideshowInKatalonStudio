@@ -27,9 +27,33 @@ And the page is expected to have a start/stop button like this:
 
 When a web page with embeded video loaded, the video may autoplay on load or stay still. It depends on how the page is designed and configured. I want to verify if the video element autoplays as expected, or it stays still as designed. I want to do the verification in Katalon Studio.
 
-## What I learned by the experiment
+## Solution proposed
 
-Verifying video is a very complicated task. My study is poor. My study has failed to conceal the complexities of video. I have given up diving into the depth anymore. 
+[aShot](https://github.com/yandex-qatools/ashot), WebDriver Screenshot utility, enables you to take a screenshot of a selected WebElement (e.g. <video">). Also aShot enables you to compare 2 images and know how much different they are. This Katalon Studio project uses aShot. This project provides a set of Custom Keywords in Katalon Studio, which wrap the aShot API. Also the project provides some example Test Cases in Katalon Studio which shows how to make use of the keywords.
+
+You will realize another problem. If you take screen shots, you would inevitably want to save images into files on your local disk. But how you manage the paths of generated files? It is a cumbersome problem. My [Materials](https://github.com/kazurayam/Materials) project provides a smart solution for managing & resolving paths of image files dynamically created by test cases on Katalon Studio.
+
+## Demonstration
+
+### Input
+
+The demo will open the following URL. Both embeds the same video clip: 'Kataln Studio - Quick start'.
+
+1. [YouTube: Katalon Quick start](https://www.youtube.com/watch?v=Q80JTXYIteU)
+2. [Katalon Docs: Quick start](https://docs.katalon.com/katalon-studio/tutorials/quick_start.html)
+
+### How to run the demo
+
+1. download the source ZIP file of this demo project from the [releases](https://github.com/kazurayam/TestingYouTubeVideoInKatalonStudio/releases) Page (version 0.4 or higher)
+2. unzip it
+3. start your Katalon Studio, open the `TestingYouTubeVideoInKatalonStudio` project.
+4. open `Test Cases/examples/vefiry-video-autoplay-example` and run it. You can use either of Firefox or Chrome.
+5. Or you open a Test Suite Collection named `Test Suites/Execute vefiry vidoes`, and run it by clicking the `Execute` button ![Execute](docs/images/TestSuiteCollection_Execute.PNG)
+
+### Output
+
+Running `Test Cases/examples/vefiry-video-autoplay-example` will result
+
 
 ## What happens? when you encounter a real YouTube trouble
 
@@ -43,4 +67,10 @@ I ran the `Test Cases/verify-video-autoplay-example`. The test case failed AS EX
 The test case emitted an ImageDiff as follows:
 ![encountered diff](docs/images/Katalon%20Studio%20-%20Quick%20start_diff%2812.09%29FAILED.png)
 
-This incident happend to prove that my approach of *verifying YouTube video autoplay or not* is capable of detecting actual YoutTube problem.
+This incident proved, just accidentally, that my approach of *verifying YouTube video autoplay or not* is capable of detecting actual YoutTube problems when they happen.
+
+## Conclusion
+
+What have I learned by the experiment? I learned that verifying video is a complicated task. My study is poor. My Custom Keywords are short for supporting the complexities of video.
+
+I would not go on this issue anymore.
